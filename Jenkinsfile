@@ -15,31 +15,27 @@ pipeline {
             }
         }
 
-        // OPTIONAL: only if you still want Maven build
         stage('Build with Maven') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean package'
             }
         }
 
-        // Build using Gradle
         stage('Build with Gradle') {
             steps {
                 sh 'gradle clean build'
             }
         }
 
-        // Run Tests
-        stage('Test') {
+        stage('Test (Gradle)') {
             steps {
                 sh 'gradle test'
             }
         }
 
-        // Run Application (now it will work ✅)
         stage('Run Application') {
             steps {
-                sh 'gradle run'
+                sh 'java -jar build/libs/*.jar'
             }
         }
     }
